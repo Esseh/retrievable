@@ -24,9 +24,11 @@ type KeyRetrievable interface {
 	StoreKey(key *datastore.Key)
 }
 
-// PlaceInDatastore will take a Retrievable source and store it into datastore based on an appengine context and key information
+// PlaceInDatastore will take a Retrievable source and store it into
+// datastore based on an appengine context and key information
+//
 // An error may be returned if datastore passes an error.
-// The datastore.Key that is returned from a successful push to datastore is also passed up.
+// A datastore.Key is returned on a successful put
 func PlaceInDatastore(ctx context.Context, key interface{}, source Retrievable) (*datastore.Key, error) {
 	uk := source.Key(ctx, key)
 	if uk, putErr := datastore.Put(ctx, uk, source); putErr != nil {
@@ -38,7 +40,9 @@ func PlaceInDatastore(ctx context.Context, key interface{}, source Retrievable) 
 	return uk, nil
 }
 
-// GetFromDatastore will take a Retrievable source and, if possible, return the saved struct from datastore.
+// GetFromDatastore will take a Retrievable source and, if possible,
+// return the saved struct from datastore.
+//
 // An error may be returned if datastore passes an error.
 func GetFromDatastore(ctx context.Context, key interface{}, source Retrievable) error {
 	uk := source.Key(ctx, key)
@@ -51,7 +55,9 @@ func GetFromDatastore(ctx context.Context, key interface{}, source Retrievable) 
 	return nil
 }
 
-// DeleteFromDatastore will take a Retrievable source and, if possible, delete the saved struct from datastore.
+// DeleteFromDatastore will take a Retrievable source and, if possible,
+// delete the saved struct from datastore.
+//
 // An error may be returned if datastore passes an error.
 func DeleteFromDatastore(ctx context.Context, key interface{}, source Retrievable) error {
 	uk := source.Key(ctx, key)

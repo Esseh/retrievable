@@ -34,6 +34,14 @@
 //
 //       retrievable.PlaceInDatastore(ctx, "Key Value", &a)
 //   }
+//
+// Retrievable structs will follow the properties of both datastore and json.
+// Information regarding this can be found at:
+//  https://godoc.org/google.golang.org/appengine/datastore#hdr-Properties
+//  and
+//  https://godoc.org/encoding/json#Marshal
+//
+// this
 package retrievable
 
 import (
@@ -42,8 +50,11 @@ import (
 )
 
 // GetEntity preforms a get action from first memcache then datastore.
-// If there is no value in memcache but there is in datastore, this function
-// will attempt to place the value in memcache for future retrieval.
+//
+// If there is no value in memcache but there is in datastore, this
+// function will attempt to place the value in memcache for future
+// retrieval.
+//
 // If found, value is placed into output (Retrievable).
 // An error may be returned if datastore cannot find the entity.
 func GetEntity(ctx context.Context, output Retrievable, key interface{}) error {
@@ -64,8 +75,10 @@ func GetEntity(ctx context.Context, output Retrievable, key interface{}) error {
 	return nil
 }
 
-// PlaceEntity will place the input Retrievable into first memcache and then datastore.
-// Returns a datastore key on successful placement.
+// PlaceEntity will place the input Retrievable into first memcache and
+// then datastore.
+//
+// Returns a datastore.Key on successful placement.
 // An error may be returned if datastore throws an error.
 func PlaceEntity(ctx context.Context, key interface{}, input Retrievable) (*datastore.Key, error) {
 	mck := input.Key(ctx, key).Encode()
@@ -73,7 +86,9 @@ func PlaceEntity(ctx context.Context, key interface{}, input Retrievable) (*data
 	return PlaceInDatastore(ctx, key, input)
 }
 
-// DeleteEntity will attempt to delete the memory pointed to by key first from memcache then datastore.
+// DeleteEntity will attempt to delete the memory pointed to by key
+// first from memcache then datastore.
+//
 // An error may be returned if datastore throws an error.
 func DeleteEntity(ctx context.Context, key *datastore.Key) error {
 	DeleteFromMemcache(ctx, key.Encode())

@@ -22,8 +22,11 @@ func unserialize(input []byte, output interface{}) error {
 	return json.Unmarshal(input, output)
 }
 
-// PlaceInMemcache will take a key, value pair and store it in memcache until expiration.
-// An error may be returned if the value is too large for memcache to store or if memcache passes an error.
+// PlaceInMemcache will take a key, value pair and store it in memcache
+// until expiration.
+//
+// An error may be returned if the value is too large for memcache to
+// store or if memcache passes an error.
 func PlaceInMemcache(ctx context.Context, key string, value interface{}, expiration time.Duration) error {
 	v := serialize(value)
 	if len(v) > 10e5 { // Memcache limits to 1 MB
@@ -37,9 +40,11 @@ func PlaceInMemcache(ctx context.Context, key string, value interface{}, expirat
 	return memcache.Set(ctx, mI)
 }
 
-// GetFromMemcache will take a key,output struct and attempt to unmarshal the value at key into
-// output.
-// An error may be returned if json.Unmarshal throws an error or if memcache throws an error.
+// GetFromMemcache will take a key,output struct and attempt to
+// unmarshal the value at key into output.
+//
+// An error may be returned if json.Unmarshal throws an error or
+// if memcache throws an error.
 func GetFromMemcache(ctx context.Context, key string, output interface{}) error {
 	item, err := memcache.Get(ctx, key)
 	if err != nil {
@@ -54,7 +59,9 @@ func DeleteFromMemcache(ctx context.Context, key string) error {
 	return memcache.Delete(ctx, key)
 }
 
-// UpdateMemcacheExpire will attempt to update a value stored at key with new expiration.
+// UpdateMemcacheExpire will attempt to update a value stored at
+// key with new expiration.
+//
 // An error may be returned if memcache throws an error
 func UpdateMemcacheExpire(ctx context.Context, key string, expiration time.Duration) error {
 	item, e := memcache.Get(ctx, key)
