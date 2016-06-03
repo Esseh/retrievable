@@ -1,6 +1,3 @@
-// Package retrievable handles interaction between
-// Google appengine's datastore and memchache using
-// a very simple to implement interface.
 package retrievable
 
 import (
@@ -8,14 +5,14 @@ import (
 	"google.golang.org/appengine/datastore"
 )
 
-// Retrievable marks a structure as interactable with datastore.
+// Retrievable marks a structure as storable with datastore.
 type Retrievable interface {
 
 	// Key handles the creation of a datastore key based on
 	// an appengine context and unexported information in interface{}.
 	//
 	// This method must tie to a pointer of your structure. If you are
-	// receiving datastore.ErrInvalidEntityType this is the likey issue.
+	// receiving datastore.ErrInvalidEntityType this is the likely issue.
 	Key(context.Context, interface{}) *datastore.Key
 }
 
@@ -29,7 +26,7 @@ type KeyRetrievable interface {
 
 // PlaceInDatastore will take a Retrievable source and store it into datastore based on an appengine context and key information
 // An error may be returned if datastore passes an error.
-// The datastore.Key that is returned from a successful push to datatastore is also passed up.
+// The datastore.Key that is returned from a successful push to datastore is also passed up.
 func PlaceInDatastore(ctx context.Context, key interface{}, source Retrievable) (*datastore.Key, error) {
 	uk := source.Key(ctx, key)
 	if uk, putErr := datastore.Put(ctx, uk, source); putErr != nil {
@@ -54,7 +51,8 @@ func GetFromDatastore(ctx context.Context, key interface{}, source Retrievable) 
 	return nil
 }
 
-// DeleteFromDatastore
+// DeleteFromDatastore will take a Retrievable source and, if possible, delete the saved struct from datastore.
+// An error may be returned if datastore passes an error.
 func DeleteFromDatastore(ctx context.Context, key interface{}, source Retrievable) error {
 	uk := source.Key(ctx, key)
 	return datastore.Delete(ctx, uk)

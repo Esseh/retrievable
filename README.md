@@ -2,13 +2,14 @@
 
 **A Golang Package**
 
-
+## Installation
+> ~$ go get github.com/Esseh/retrievable
 
 ## Importing
-
-> TEXT
+> import "github.com/Esseh/retrievable"
 
 ## Features
 
 ## Usage
 
+## Dependency
