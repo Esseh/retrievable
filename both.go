@@ -5,36 +5,35 @@
 // A trivial example of implementing Retrievable is:
 //
 //   package main
-
+//
 //   import (
 //       "github.com/Esseh/retrievable"
 //       "golang.org/x/net/context"
 //       "google.golang.org/appengine"
 //       "google.golang.org/appengine/datastore"
 //   )
-
+//
 //   type A struct {
 //       Value string
 //       ID    string `datastore:"-" json:"-"`
 //   }
-
+//
 //   func (a *A) Key(ctx context.Context, key interface{}) *datastore.Key {
 //       return datastore.NewKey(ctx, "tableA", key.(string), 0, nil)
 //   }
-
+//
 //   func (a *A) StoreKey(key *datastore.Key) {
 //       a.ID = key.StringID()
 //   }
-
+//
 //   func Example(w http.ResponseWriter, r *http.Request) {
 //       ctx := appengine.NewContext(req)
-
+//
 //       a := A{}
 //       a.Value = "Example Information"
-
+//
 //       retrievable.PlaceInDatastore(ctx, "Key Value", &a)
 //   }
-//
 package retrievable
 
 import (
