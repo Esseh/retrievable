@@ -67,7 +67,7 @@ func GetEntity(ctx context.Context, output Retrievable, key interface{}) error {
 		return nil
 	}
 
-	if getErr := GetFromDatastore(ctx, DSKey, output); getErr != nil {
+	if getErr := GetFromDatastore(ctx, key, output); getErr != nil {
 		return getErr
 	}
 
