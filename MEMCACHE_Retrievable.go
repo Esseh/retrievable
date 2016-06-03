@@ -7,7 +7,7 @@ import (
 	"golang.org/x/net/context"
 	"google.golang.org/appengine/datastore"
 	"google.golang.org/appengine/memcache"
-)
+) 
 
 type Retrievable interface {
 	Key(context.Context, interface{}) *datastore.Key
