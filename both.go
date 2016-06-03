@@ -24,7 +24,7 @@ func GetEntity(ctx context.Context, output Retrievable, key interface{}) error {
 		return getErr
 	}
 
-	PlaceInDatastore(ctx, DSKey.Encode(), output, 0)
+	PlaceInMemcache(ctx, DSKey.Encode(), output, 0)
 	return nil
 }
 
