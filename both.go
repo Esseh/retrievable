@@ -1,3 +1,8 @@
+// Package retrievable handles interaction between
+// Google appengine's datastore and memchache using
+// a very simple to implement interface.
+//
+// More Documentation
 package retrievable
 
 import (
