@@ -21,7 +21,7 @@ func unserialize(input []byte, output interface{}) {
 	json.Unmarshal(input, output)
 }
 
-func PutToMemcache(ctx context.Context, key string, value interface{}, expiration time.Duration) error {
+func PlaceInMemcache(ctx context.Context, key string, value interface{}, expiration time.Duration) error {
 	v := serialize(value)
 	if len(v) > 10e5 { // Memcache limits to 1 MB
 		return ErrTooLarge
