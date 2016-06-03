@@ -37,11 +37,11 @@
 //
 // Retrievable structs will follow the properties of both datastore and json.
 // Information regarding this can be found at:
-//  https://godoc.org/google.golang.org/appengine/datastore#hdr-Properties
-//  and
-//  https://godoc.org/encoding/json#Marshal
+// https://godoc.org/google.golang.org/appengine/datastore#hdr-Properties
+// and
+// https://godoc.org/encoding/json#Marshal
 //
-// this
+//
 package retrievable
 
 import (
