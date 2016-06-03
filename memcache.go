@@ -11,7 +11,7 @@ import (
 	"time"
 )
 
-const (
+var (
 	ErrTooLarge = errors.New("Esseh/Retrivable Memchache Error: Incoming size is too large, cannot submit to memcache.")
 )
 

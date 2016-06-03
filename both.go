@@ -24,13 +24,13 @@ func GetEntity(ctx context.Context, output Retrievable, key interface{}) error {
 		return getErr
 	}
 
-	PutToMemcache(ctx, DSKey.Encode(), output, 0)
+	PlaceInDatastore(ctx, DSKey.Encode(), output, 0)
 	return nil
 }
 
 func PlaceEntity(ctx context.Context, key interface{}, input Retrievable) (*datastore.Key, error) {
 	mck := input.Key(ctx, key).Encode()
-	PutToMemcache(ctx, mck, input, 0)
+	PlaceInMemcache(ctx, mck, input, 0)
 	return PlaceInDatastore(ctx, key, input)
 }
 
