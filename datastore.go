@@ -31,7 +31,8 @@ type KeyRetrievable interface {
 // A datastore.Key is returned on a successful put
 func PlaceInDatastore(ctx context.Context, key interface{}, source Retrievable) (*datastore.Key, error) {
 	uk := source.Key(ctx, key)
-	if uk, putErr := datastore.Put(ctx, uk, source); putErr != nil {
+	uk, putErr := datastore.Put(ctx, uk, source)
+	if putErr != nil {
 		return uk, putErr
 	}
 	if i, ok := source.(KeyRetrievable); ok {
