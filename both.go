@@ -57,7 +57,7 @@ import (
 //
 // If found, value is placed into output (Retrievable).
 // An error may be returned if datastore cannot find the entity.
-func GetEntity(ctx context.Context, output Retrievable, key interface{}) error {
+func GetEntity(ctx context.Context, key interface{}, output Retrievable) error {
 	DSKey := output.Key(ctx, key)
 
 	if cacheErr := GetFromMemcache(ctx, DSKey.Encode(), output); cacheErr == nil {
