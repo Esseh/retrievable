@@ -2,4 +2,4 @@
 
 Much of our call specific documentation exists on [Godoc](https://godoc.org/github.com/Esseh/retrievable). For specific implementation, parameter, and error documentation check there.
 
-For generalised documentation focused towards usaage, check our own [Wiki](https://github.com/Esseh/retrievable/wiki). We show simple and advanced usage of this package including dependancies, installation, import and more!
+For generalised documentation focused towards usage, check our own [Wiki](https://github.com/Esseh/retrievable/wiki). We show simple and advanced usage of this package including dependancies, installation, import and more!

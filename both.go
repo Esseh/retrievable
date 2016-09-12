@@ -14,16 +14,13 @@
 //   )
 //
 //   type A struct { // A is an example structure implementing KeyRetrievable
-//       Value string
-//       ID    string `datastore:"-" json:"-"` // We will mark the ID as not to be stored in either Datastore or Memcache
+//       Value    string
+//       StringID `datastore:"-" json:"-"` // We will mark the ID as not to be stored in either Datastore or Memcache
+//       // KeyRetrievable is implemented by one of the helper types useful for the most common cases
 //   }
 //
 //   func (a *A) Key(ctx context.Context, key interface{}) *datastore.Key {
 //       return datastore.NewKey(ctx, "tableA", key.(string), 0, nil) // This is the function to implement Retrievable, A in this context knows the Kind it is a part of and that it's key is a string.
-//   }
-//
-//   func (a *A) StoreKey(key *datastore.Key) {
-//       a.ID = key.StringID() // This is the other function to implement KeyRetrievable, now when retrieved A will have it's key in ID.
 //   }
 //
 //   func Example(w http.ResponseWriter, r *http.Request) {
