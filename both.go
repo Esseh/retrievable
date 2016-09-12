@@ -35,7 +35,8 @@
 //       retrievable.PlaceInDatastore(ctx, "Key Value", &a)
 //   }
 //
-// Retrievable structs will follow the properties of both datastore and json.
+// Retrievable structs will follow the properties of datastore.
+// If a struct does not implement Serializable, it will also follow the properties of json.
 // Information regarding this can be found at:
 // https://godoc.org/google.golang.org/appengine/datastore#hdr-Properties
 // and

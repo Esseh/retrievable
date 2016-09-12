@@ -13,6 +13,16 @@ var (
 	ErrTooLarge = errors.New("Esseh/Retrievable Memcache Error: Incoming size is too large, cannot submit to memcache.")
 )
 
+// Serializable marks a structure as having a custom storage implementation in memcache.
+//
+// If a struct implements Serializable, retrievable will use its methods instead of json for memcache.
+type Serializable interface {
+	// Serialize should create a slice of bytes that represents the structure.
+	Serialize() []byte
+	// Unserialize should take the slice of bytes from serialize and recreate the structure.
+	Unserialize([]byte) error
+}
+
 func serialize(input interface{}) []byte {
 	r, _ := json.Marshal(input)
 	return r
@@ -28,7 +38,12 @@ func unserialize(input []byte, output interface{}) error {
 // An error may be returned if the value is too large for memcache to
 // store or if memcache passes an error.
 func PlaceInMemcache(ctx context.Context, key string, value interface{}, expiration time.Duration) error {
-	v := serialize(value)
+	var v []byte
+	if ser, ok := value.(Serializable); ok {
+		v = ser.Serialize()
+	} else {
+		v = serialize(value)
+	}
 	if len(v) > 10e5 { // Memcache limits to 1 MB
 		return ErrTooLarge
 	}
@@ -49,6 +64,9 @@ func GetFromMemcache(ctx context.Context, key string, output interface{}) error 
 	item, err := memcache.Get(ctx, key)
 	if err != nil {
 		return err
+	}
+	if ser, ok := output.(Serializable); ok {
+		return ser.Unserialize(item.Value)
 	}
 	return unserialize(item.Value, &output)
 }
