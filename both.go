@@ -70,7 +70,6 @@ func GetEntity(ctx context.Context, key interface{}, output Retrievable) error {
 		return getErr
 	}
 
-	PlaceInMemcache(ctx, DSKey.Encode(), output, 0)
 	return nil
 }
 
